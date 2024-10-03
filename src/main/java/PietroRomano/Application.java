@@ -48,6 +48,7 @@ public class Application {
         }
 
         System.out.println("------------------------------ESERCIZIO N'1-------------------------------------");
+        System.out.println(" ");
         System.out.println("Raggruppamento ordini per cliente: ");
         Map<Customer, List<Order>> ordiniPerCliente = orders.stream().collect(Collectors.groupingBy(order -> order.getCustomer()));
         ordiniPerCliente.forEach((customer, orderList) -> {
@@ -63,6 +64,7 @@ public class Application {
 
 
         System.out.println("------------------------------ESERCIZIO N'2-------------------------------------");
+        System.out.println(" ");
         System.out.println("Calcolare il totale delle vendite per ogni cliente: ");
         Map<Customer, Double> totaleVenditePerCliente = orders.stream().collect(Collectors.groupingBy(Order::getCustomer,
                 Collectors.summingDouble(order -> order.getProducts().stream().mapToDouble(Product::getPrice).sum())));
@@ -72,6 +74,7 @@ public class Application {
 
 
         System.out.println("------------------------------ESERCIZIO N'3-------------------------------------");
+        System.out.println(" ");
         System.out.println("trova i prodotti piú costosi: ");
         OptionalDouble prodottiCostosi = products.stream().mapToDouble(Product::getPrice).max();
         if (prodottiCostosi.isPresent()) {
@@ -83,14 +86,21 @@ public class Application {
 
 
         System.out.println("------------------------------ESERCIZIO N'4-------------------------------------");
+        System.out.println(" ");
         System.out.println("Calcola la media degli importi degli ordini: ");
         OptionalDouble mediaImportiOrdini = orders.stream().mapToDouble(order -> order.getProducts().stream().mapToDouble(Product::getPrice).sum()).average();
         if (mediaImportiOrdini.isPresent()) System.out.println("Media degli importi degli ordini: " + mediaImportiOrdini.getAsDouble());
         else System.out.println("Nessun ordine trovato");
 
-        System.out.println("------------------------------ESERCIZIO N'5-------------------------------------");
-        System.out.println("Calcola la media degli importi degli ordini: ");
 
+        System.out.println("------------------------------ESERCIZIO N'5-------------------------------------");
+        System.out.println(" ");
+        System.out.println("Raggruppa i prodotti per categoria e calcola la somma degli importi per ogni categoria: ");
+        Map<String, Double> importiPerCategoria = products.stream().collect(Collectors.groupingBy(product -> product.category, Collectors.summingDouble(product -> product.price)));
+        // System.out.println(importiPerCategoria);
+        importiPerCategoria.forEach((categoria, somma) -> {
+            System.out.println("Categoria: " + categoria + " | Somma degli importi: " + somma);
+        });
 
 
     }
